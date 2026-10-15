@@ -1,0 +1,3 @@
+<script src="app.js"></script>
+<script src="./wine-config.js"></script>
+<script src="./wine-list.js"></script>
