@@ -31,8 +31,13 @@ html[data-fx]{--fx-a:var(--accent);--fx-b:var(--fg);--fx-halo:var(--bg)}
   transition:transform .28s cubic-bezier(.22,1,.36,1)}
 .fx-cursor.is-hover .fx-cursor-hover{transform:scale(1.16) rotate(-6deg)}
 .fx-cursor-inner{width:100%;height:100%;transform-origin:50% 50%}
-.fx-cursor svg{display:block;width:100%;height:100%;overflow:visible;
-  filter:drop-shadow(0 0 1.2px var(--fx-halo)) drop-shadow(0 0 .6px var(--fx-halo)) drop-shadow(0 3px 4px rgba(0,0,0,.28))}
+.fx-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .28));
+}
 
 /* ---------- RESTAURANT — fork stabs forward ---------- */
 html[data-fx="restaurant"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-stab .38s cubic-bezier(.3,.7,.3,1) both}
