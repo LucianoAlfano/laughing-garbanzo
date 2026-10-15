@@ -77,3 +77,13 @@ h3{font-weight:400}
 .section:nth-of-type(even) .sec-head{border-top:1px solid var(--line);padding-top:34px}
 .dish .shot{aspect-ratio:4/3;height:auto}
 @media(max-width:860px){.concept-tabs--restaurant .wrap{justify-content:flex-start}.hero-inner{margin-left:auto;padding-left:24px}.hero{--hero-mobile-pos:58% 50%}}
+
+/* Live Google Sheet controls */
+.sheet-admin-link{display:inline-flex;align-items:center;gap:9px;margin-top:24px;padding:12px 17px;border:1px solid rgba(217,184,106,.55);color:#f6f1e7;font-family:var(--font-ui);font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;transition:background .25s ease,border-color .25s ease,transform .25s ease}
+.sheet-admin-link:hover{background:rgba(217,184,106,.13);border-color:#d9b86a;transform:translateY(-2px)}
+.live-menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:54px 7%}
+.menu-live-status{margin:0 0 28px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.menu-row--featured{border-left:2px solid var(--accent);padding-left:16px}
+.menu-dietary{display:block;margin-top:7px;color:var(--accent);font-family:var(--font-ui);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.price .meta{display:block;margin-top:4px;font-family:var(--font-ui);font-size:9px;line-height:1.35;letter-spacing:.06em;color:var(--muted);white-space:normal;max-width:110px}
+@media(max-width:760px){.live-menu-grid{grid-template-columns:1fr;gap:42px}.sheet-admin-link{font-size:9px;padding:11px 13px}}

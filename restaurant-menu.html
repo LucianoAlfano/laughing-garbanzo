@@ -41,41 +41,13 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <nav aria-label="Explore restaurant concept sections" class="concept-tabs concept-tabs--restaurant">
 <div class="wrap"><a href="restaurant.html">Home</a><a aria-current="page" href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a></div>
 </nav>
-<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Home</span><h1>Menu</h1><p class="lede">Explore menu for this restaurant website concept.</p></div></section><section class="section" id="menu"><div class="wrap">
+<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Home</span><h1>Menu</h1><p class="lede">Explore menu for this restaurant website concept.</p><a class="sheet-admin-link" href="https://docs.google.com/spreadsheets/d/1h3gh3p0kFrthk3AVDAoipkDWxo5NKiRSlvmOiKSaRGI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open menu &amp; wine workbook <span aria-hidden="true">↗</span></a></div></section><section class="section" id="menu"><div class="wrap">
 <div class="sec-head reveal">
 <div><span class="kicker">The menu</span><h2>This week at the pass</h2></div>
 <p class="lede">Written on Monday, printed on Tuesday, and changed again when the boats come in. Everything below is illustrative.</p>
 </div>
-<div class="g2" style="--gap:7%">
-<div class="menu-col reveal">
-<h3>To begin</h3>
-<div class="rows">
-<div class="row"><div><h4>Charred leeks</h4><p>Toasted hazelnut, brown butter, aged sherry.</p></div><span class="price">14</span></div>
-<div class="row"><div><h4>Oysters on ice</h4><p>Half dozen, mignonette, lemon. Daily selection.</p></div><span class="price">21</span></div>
-<div class="row"><div><h4>Chicory &amp; pear</h4><p>Blue cheese, candied walnut, cider vinaigrette.</p></div><span class="price">13</span></div>
-<div class="row"><div><h4>Warm bread service</h4><p>Cultured butter, flaked salt. Baked through service.</p></div><span class="price">7</span></div>
-</div>
-<h3 style="margin-top:46px">Desserts</h3>
-<div class="rows">
-<div class="row"><div><h4>Olive oil cake</h4><p>Stone fruit, crème fraîche.</p></div><span class="price">11</span></div>
-<div class="row"><div><h4>Dark chocolate pot</h4><p>Sea salt, shortbread.</p></div><span class="price">12</span></div>
-</div>
-</div>
-<div class="menu-col reveal" style="--d:110ms">
-<h3>Mains</h3>
-<div class="rows">
-<div class="row"><div><h4>Hand-cut pasta</h4><p>Late summer tomato, basil, cultured cream.</p></div><span class="price">22</span></div>
-<div class="row"><div><h4>Line-caught fish</h4><p>Changes daily. Fennel, citrus, new potato.</p></div><span class="price">34</span></div>
-<div class="row"><div><h4>Coal-roasted chicken</h4><p>For two. Bread salad, pan jus, bitter greens.</p></div><span class="price">46</span></div>
-<div class="row"><div><h4>Dry-aged sirloin</h4><p>Thirty-two days. Marrow butter, watercress.</p></div><span class="price">52</span></div>
-<div class="row"><div><h4>Autumn squash</h4><p>Brown butter, sage, pumpkin seed. Vegetarian.</p></div><span class="price">24</span></div>
-</div>
-<h3 style="margin-top:46px">Tasting</h3>
-<div class="rows">
-<div class="row"><div><h4>Chef’s four courses</h4><p>Whole table. Wine pairing available.</p></div><span class="price">78<span class="meta">pairing +45</span></span></div>
-</div>
-</div>
-</div>
+<p class="menu-live-status muted-sm" id="menu-status" role="status" aria-live="polite">Loading the current menu…</p>
+<div class="live-menu-grid" id="menu-list" aria-busy="true"></div>
 <p class="muted-sm rule-top reveal" style="margin-top:50px">In a real build this menu is edited by your kitchen from a phone — no developer, no PDF, no “please call for today’s specials.”</p>
 </div></section><section class="section"><div class="wrap">
 <div class="closer reveal">
@@ -105,5 +77,7 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <a class="dock-exit" href="restaurant.html">← Themes</a>
 </div>
 <script src="app.js"></script>
+<script src="menu-config.js"></script>
+<script src="menu-list.js"></script>
 </body>
 </html>
