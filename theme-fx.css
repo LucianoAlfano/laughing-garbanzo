@@ -1,0 +1,89 @@
+/* ===========================================================
+   NextDay Digital — themed cursors + ambient backgrounds
+   Works with theme-fx.js. Theme is detected automatically
+   from the page's theme-*.css stylesheet.
+   =========================================================== */
+
+/* ---------- ambient background + click burst layers ---------- */
+.fx-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block}
+.fx-burst{position:fixed;inset:0;width:100%;height:100%;z-index:9999;pointer-events:none;display:block}
+
+/* ---------- hide the system cursor (mouse/trackpad only) ---------- */
+html.fx-has-cursor,html.fx-has-cursor *{cursor:none!important}
+html.fx-has-cursor input:not([type=button]):not([type=submit]):not([type=checkbox]):not([type=radio]):not([type=range]),
+html.fx-has-cursor textarea,
+html.fx-has-cursor [contenteditable="true"]{cursor:text!important}
+html.fx-has-cursor select{cursor:default!important}
+
+/* ---------- cursor colours follow each theme + light/dark mode ---------- */
+html[data-fx]{--fx-a:var(--accent);--fx-b:var(--fg);--fx-halo:var(--bg)}
+.fx-a{fill:var(--fx-a)}
+.fx-b{fill:var(--fx-b)}
+.fx-sa{fill:none;stroke:var(--fx-a)}
+.fx-sb{fill:none;stroke:var(--fx-b)}
+
+/* ---------- cursor structure ---------- */
+.fx-cursor{position:fixed;left:0;top:0;width:40px;height:40px;z-index:10000;pointer-events:none;
+  opacity:0;transition:opacity .2s ease;will-change:transform}
+.fx-cursor.is-visible{opacity:1}
+.fx-cursor.is-native{opacity:0}
+.fx-cursor-hover{width:100%;height:100%;transform-origin:var(--fx-hx) var(--fx-hy);
+  transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.fx-cursor.is-hover .fx-cursor-hover{transform:scale(1.16) rotate(-6deg)}
+.fx-cursor-inner{width:100%;height:100%;transform-origin:50% 50%}
+.fx-cursor svg{display:block;width:100%;height:100%;overflow:visible;
+  filter:drop-shadow(0 0 1.2px var(--fx-halo)) drop-shadow(0 0 .6px var(--fx-halo)) drop-shadow(0 3px 4px rgba(0,0,0,.28))}
+
+/* ---------- RESTAURANT — fork stabs forward ---------- */
+html[data-fx="restaurant"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-stab .38s cubic-bezier(.3,.7,.3,1) both}
+@keyframes fx-stab{0%{transform:none}35%{transform:translate(-6px,-6px) rotate(-4deg)}65%{transform:translate(1px,1px)}100%{transform:none}}
+
+/* ---------- LANDSCAPE — shears snip open and closed ---------- */
+html[data-fx="landscape"] .fx-blade-a{transform-box:fill-box;transform-origin:76% 100%}
+html[data-fx="landscape"] .fx-blade-b{transform-box:fill-box;transform-origin:24% 100%}
+html[data-fx="landscape"] .fx-cursor.is-click .fx-blade-a{animation:fx-snip-a .36s ease both}
+html[data-fx="landscape"] .fx-cursor.is-click .fx-blade-b{animation:fx-snip-b .36s ease both}
+@keyframes fx-snip-a{0%{transform:none}40%{transform:rotate(-20deg)}75%{transform:rotate(3deg)}100%{transform:none}}
+@keyframes fx-snip-b{0%{transform:none}40%{transform:rotate(20deg)}75%{transform:rotate(-3deg)}100%{transform:none}}
+
+/* ---------- CONTRACTOR — hammer winds up and strikes ---------- */
+html[data-fx="contractor"] .fx-cursor-inner{transform-origin:86% 86%}
+html[data-fx="contractor"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-swing .46s cubic-bezier(.3,.7,.3,1) both}
+@keyframes fx-swing{0%{transform:rotate(0)}28%{transform:rotate(26deg)}55%{transform:rotate(-16deg)}78%{transform:rotate(5deg)}100%{transform:rotate(0)}}
+
+/* ---------- AUTO — wrench twists ---------- */
+html[data-fx="auto"] .fx-cursor-inner{transform-origin:24% 24%}
+html[data-fx="auto"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-twist .42s cubic-bezier(.3,.7,.3,1) both}
+@keyframes fx-twist{0%{transform:none}45%{transform:rotate(-40deg)}75%{transform:rotate(6deg)}100%{transform:none}}
+
+/* ---------- BAKERY — whisk whips back and forth ---------- */
+html[data-fx="bakery"] .fx-cursor-inner{transform-origin:80% 80%}
+html[data-fx="bakery"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-whisk .5s ease both}
+@keyframes fx-whisk{0%{transform:none}20%{transform:rotate(-16deg)}40%{transform:rotate(13deg)}60%{transform:rotate(-9deg)}80%{transform:rotate(4deg)}100%{transform:none}}
+
+/* ---------- FITNESS — dumbbell lift ---------- */
+html[data-fx="fitness"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-lift .42s cubic-bezier(.3,.7,.3,1) both}
+@keyframes fx-lift{0%{transform:none}30%{transform:translateY(-8px) scale(1.14)}55%{transform:translateY(2px) scale(.94)}100%{transform:none}}
+
+/* ---------- SALON — comb sweeps ---------- */
+html[data-fx="salon"] .fx-cursor-inner{transform-origin:80% 80%}
+html[data-fx="salon"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-comb .44s ease both}
+@keyframes fx-comb{0%{transform:none}35%{transform:rotate(-22deg) translateX(-2px)}70%{transform:rotate(6deg)}100%{transform:none}}
+
+/* ---------- PROFESSIONAL — fountain pen taps ---------- */
+html[data-fx="professional"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-ink .34s cubic-bezier(.3,.7,.3,1) both}
+@keyframes fx-ink{0%{transform:none}35%{transform:translate(-4px,-4px) scale(.93)}100%{transform:none}}
+
+/* ---------- NEXTDAY (agency pages) — pointer press ---------- */
+html[data-fx="nextday"] .fx-cursor-inner{transform-origin:18% 14%}
+html[data-fx="nextday"] .fx-cursor.is-click .fx-cursor-inner{animation:fx-tap .3s ease both}
+@keyframes fx-tap{0%{transform:none}40%{transform:scale(.8)}100%{transform:none}}
+
+@media print{.fx-bg,.fx-burst,.fx-cursor{display:none!important}}
+
+/* Reduced motion, enforced here so it does not rely on base.css.
+   Themed artwork stays on screen but all movement is removed. */
+@media(prefers-reduced-motion:reduce){
+  .fx-cursor-hover,.fx-cursor-inner,.fx-blade-a,.fx-blade-b{animation:none!important;transition:none!important}
+  .fx-burst{display:none!important}
+}
