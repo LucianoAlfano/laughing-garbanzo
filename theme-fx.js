@@ -58,9 +58,8 @@
      =========================================================== */
   var TILT = 'transform="rotate(-45 24 24)"';
   var CURSORS = {
-    restaurant: { hs: [9, 9], svg: // fork
-      '<g ' + TILT + '><path class="fx-sb" stroke-width="2.4" stroke-linecap="round" d="M19 3v10M24 3v10M29 3v10M19 12.5c0 4.5 2.2 6.5 5 6.5s5-2 5-6.5"/>' +
-      '<rect class="fx-a" x="21.6" y="18.5" width="4.8" height="27" rx="2.4"/></g>' },
+    restaurant: { hs: [4, 4], svg: // custom Harbor & Vine fork cursor
+      '<image href="restaurant-fork-cursor.png?v=10" x="0" y="0" width="48" height="48" preserveAspectRatio="xMidYMid meet"/>' },
     landscape: { hs: [9, 9], svg: // pruning shears
       '<g ' + TILT + '><path class="fx-b fx-blade-a" d="M22.5 25 L19 4.5 Q21 2.5 23.8 4.6 L25.6 25 Z"/>' +
       '<path class="fx-b fx-blade-b" d="M25.5 25 L29 4.5 Q27 2.5 24.2 4.6 L22.4 25 Z"/>' +
