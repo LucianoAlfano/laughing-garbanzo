@@ -1,7 +1,193 @@
-(()=>{const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];let urlMode=new URLSearchParams(location.search).get('mode');let saved=urlMode||localStorage.getItem('ndd-theme');if(saved)document.documentElement.dataset.theme=saved;const setTheme=t=>{document.documentElement.dataset.theme=t;localStorage.setItem('ndd-theme',t);$$('.mode').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===t))};$$('.theme-toggle').forEach(b=>b.onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));$$('.mode').forEach(b=>b.onclick=()=>setTheme(b.dataset.mode));setTheme(document.documentElement.dataset.theme||'light');let savedAccent=sessionStorage.getItem('ndd-accent-'+location.pathname);if(savedAccent)document.body.dataset.accent=savedAccent;$$('.swatch').forEach(b=>b.onclick=()=>{document.body.dataset.accent=b.dataset.accent;sessionStorage.setItem('ndd-accent-'+location.pathname,b.dataset.accent);$$('.swatch').forEach(x=>x.setAttribute('aria-pressed',x===b))});let burger=$('#burger'),mobile=$('#mobile');if(burger)burger.onclick=()=>{let o=burger.getAttribute('aria-expanded')==='true';burger.setAttribute('aria-expanded',!o);mobile.classList.toggle('open',!o)};addEventListener('scroll',()=>{let y=scrollY,h=document.documentElement.scrollHeight-innerHeight;$('#progress')?.style.setProperty('--p',h?y/h:0);$('#header')?.classList.toggle('stuck',y>8)},{passive:true});if('IntersectionObserver'in window){let io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});$$('.reveal').forEach(e=>io.observe(e))}else $$('.reveal').forEach(e=>e.classList.add('in'));$$('.filter').forEach(b=>b.onclick=()=>{$$('.filter').forEach(x=>x.setAttribute('aria-pressed',x===b));$$('.theme-card').forEach(c=>c.classList.toggle('hide',b.dataset.filter!=='all'&&c.dataset.cat!==b.dataset.filter))});let requested=new URLSearchParams(location.search).get('theme');let tf=document.querySelector('[name=theme]');if(requested&&tf)tf.value=requested;$$('#mobile a').forEach(a=>a.onclick=()=>mobile?.classList.remove('open'));document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;if(e.key.toLowerCase()==='l')setTheme('light');if(e.key.toLowerCase()==='d')setTheme('dark')});let form=$('#inquiry-form');if(form)form.onsubmit=e=>{e.preventDefault();let d=new FormData(form);if(!d.get('business')||!d.get('needs')){$('#form-status').textContent='Add your business name and a short note first.';return}let body=`Name: ${d.get('name')||'Not provided'}
-Business: ${d.get('business')}
-Website: ${d.get('website')||'None yet'}
-Theme: ${d.get('theme')||'Help me choose'}
+/* ===========================================================
+   NextDay Digital — shared behaviour
+   No dependencies. Everything degrades without JS.
+   =========================================================== */
+(function () {
+  'use strict';
 
-What I need:
-${d.get('needs')}`;location.href=`mailto:anthonyalfano157@gmail.com?subject=${encodeURIComponent('Website inquiry — '+d.get('business'))}&body=${encodeURIComponent(body)}`;$('#form-status').textContent='Your email draft is ready.'}})();
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $  = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return [].slice.call((c || document).querySelectorAll(s)); };
+  var qs = new URLSearchParams(location.search);
+
+  /* ---------- colour mode ----------
+     Each demo declares its own default on <html data-default>.
+     ?mode=dark deep-links; the choice then follows the visitor. */
+  var html = document.documentElement;
+  var KEY  = 'ndd-mode';
+
+  function apply(mode) {
+    html.setAttribute('data-theme', mode);
+    try { localStorage.setItem(KEY, mode); } catch (e) {}
+    $$('.dock-seg button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.mode === mode));
+    });
+    var tc = $('meta[name="theme-color"]');
+    if (tc) tc.setAttribute('content', getComputedStyle(document.body).backgroundColor);
+  }
+
+  var urlMode = (qs.get('mode') || '').toLowerCase();
+  var stored  = null;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+  apply(urlMode === 'dark' || urlMode === 'light' ? urlMode
+        : stored || html.getAttribute('data-default') || 'light');
+
+  $$('.dock-seg button').forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.mode); });
+  });
+  $$('[data-toggle-mode]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      apply(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest('input,textarea,select')) return;
+    var k = e.key.toLowerCase();
+    if (k === 'l') apply('light');
+    if (k === 'd') apply('dark');
+  });
+
+  /* ---------- mobile drawer ---------- */
+  var burger = $('#burger'), drawer = $('#drawer');
+  if (burger && drawer) {
+    burger.addEventListener('click', function () {
+      var open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      drawer.classList.toggle('open', !open);
+    });
+    $$('a', drawer).forEach(function (a) {
+      a.addEventListener('click', function () {
+        burger.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('open');
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        burger.setAttribute('aria-expanded', 'false');
+        drawer.classList.remove('open');
+      }
+    });
+  }
+
+  /* ---------- sticky header + read progress ---------- */
+  var head = $('#head'), prog = $('#prog'), tick = false;
+  function frame() {
+    var y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    if (head) head.classList.toggle('stuck', y > 8);
+    if (prog) prog.style.setProperty('--p', h > 0 ? y / h : 0);
+    tick = false;
+  }
+  addEventListener('scroll', function () {
+    if (!tick) { tick = true; requestAnimationFrame(frame); }
+  }, { passive: true });
+  frame();
+
+  /* ---------- reveal on scroll ---------- */
+  var items = $$('.reveal');
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- gallery filters (themes.html) ---------- */
+  var grid = $('#grid');
+  if (grid) {
+    var cards = $$('[data-cat]', grid), chips = $$('.chip-filter'), count = $('#count');
+    function filter(key, push) {
+      var n = 0;
+      cards.forEach(function (c) {
+        var ok = key === 'all' || c.dataset.cat === key;
+        c.hidden = !ok;
+        if (ok) n++;
+      });
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === key)); });
+      if (count) count.textContent = key === 'all'
+        ? 'Showing all ' + n + ' themes'
+        : 'Showing ' + n + ' of ' + cards.length + ' themes';
+      if (push) try { history.replaceState(null, '', key === 'all' ? location.pathname : '?c=' + key); } catch (e) {}
+    }
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () { filter(c.dataset.filter, true); });
+    });
+    var start = qs.get('c');
+    if (start && chips.some(function (c) { return c.dataset.filter === start; })) filter(start, false);
+  }
+
+  /* ---------- inquiry form (index.html) ---------- */
+  var form = $('#inquiry');
+  if (form) {
+    var status = $('#status'), themeField = $('#f-theme'), note = $('#picked');
+    var want = qs.get('theme');
+    if (want && themeField) {
+      themeField.value = want.slice(0, 80);
+      if (note) { note.textContent = 'Starting from: ' + themeField.value; note.hidden = false; }
+    }
+    $$('[data-theme-pick]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (themeField) themeField.value = a.dataset.themePick;
+      });
+    });
+
+    var DRAFT = 'ndd-draft';
+    var fields = $$('input[name],textarea[name]', form).filter(function (f) { return f.type !== 'hidden'; });
+    try {
+      var d = JSON.parse(localStorage.getItem(DRAFT) || '{}');
+      fields.forEach(function (f) { if (d[f.name]) f.value = d[f.name]; });
+    } catch (e) {}
+    fields.forEach(function (f) {
+      f.addEventListener('input', function () {
+        var o = {};
+        fields.forEach(function (g) { if (g.value) o[g.name] = g.value; });
+        try { localStorage.setItem(DRAFT, JSON.stringify(o)); } catch (e) {}
+        f.removeAttribute('aria-invalid');
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form.elements.company_url && form.elements.company_url.value) return; // honeypot
+      var biz = $('#f-business'), need = $('#f-needs');
+      var miss = [biz, need].filter(function (f) { return f && !f.value.trim(); });
+      if (miss.length) {
+        miss.forEach(function (f) { f.setAttribute('aria-invalid', 'true'); });
+        miss[0].focus();
+        if (status) status.textContent = 'Add your business name and a short note, then try again.';
+        return;
+      }
+      var fd = new FormData(form);
+      var body = [
+        'Name: '      + (fd.get('name')    || 'Not provided'),
+        'Business: '  +  fd.get('business'),
+        'Website: '   + (fd.get('website') || 'None yet'),
+        'Phone: '     + (fd.get('phone')   || 'Not provided'),
+        'Theme: '     + (fd.get('theme')   || 'Help me choose'),
+        '', 'What I need:', fd.get('needs')
+      ].join('\n');
+      location.href = 'mailto:anthonyalfano157@gmail.com'
+        + '?subject=' + encodeURIComponent('Website inquiry — ' + fd.get('business'))
+        + '&body='    + encodeURIComponent(body);
+      if (status) status.textContent = 'Your email draft is open — review it and hit send. Nothing was stored by this page.';
+      try { localStorage.removeItem(DRAFT); } catch (e) {}
+    });
+  }
+
+  /* ---------- anchor scrolling with header offset ---------- */
+  $$('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var t = document.querySelector(id);
+      if (!t) return;
+      e.preventDefault();
+      scrollTo({ top: t.getBoundingClientRect().top + scrollY - 84, behavior: reduce ? 'auto' : 'smooth' });
+      try { history.replaceState(null, '', id); } catch (err) {}
+    });
+  });
+})();

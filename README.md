@@ -1,37 +1,13 @@
-# NextDay Digital
+# Harbor & Vine detailed restaurant site
 
-Complete static sales website with:
+Pages: homepage, menu, live wine list, private dining, story, contact, and reservations.
 
-- Main sales homepage
-- Filterable website-theme gallery
-- Eight detailed industry demo sites
-- Light/dark and accent-color preview controls
-- Responsive navigation and layouts
-- Email-draft inquiry form
-- JPEG fallbacks plus WebP media
-- Custom 404, sitemap, and robots file
+## Google Sheet wine connection
 
-## Preview locally
+1. Create a dedicated public tab named `Wine List`.
+2. Use headers: `Name, Producer, Vintage, Type, Country, Region, Grape, Bottle Price, Glass Price, Stock, Featured, Notes`.
+3. In Google Sheets select **File > Share > Publish to web**. Choose only the Wine List tab and choose **CSV**.
+4. Copy the published CSV URL into `wine-config.js`.
+5. Keep sensitive information out of the published tab because published content is public.
 
-```bash
-python -m http.server 8765
-```
-
-Open `http://localhost:8765`.
-
-## Publish
-
-Upload the **contents of this folder** so `index.html`, `style.css`, and the `assets` folder remain beside each other. Do not upload only the HTML files. All image URLs are relative, for example `assets/auto.webp` with `assets/auto.jpg` as the fallback.
-
-## Theme pages
-
-- `restaurant.html`
-- `landscape.html`
-- `auto.html`
-- `bakery.html`
-- `fitness.html`
-- `salon.html`
-- `contractor.html`
-- `professional.html`
-
-All businesses and details in these demos are fictional and illustrative.
+The wine page searches names, producers, grapes, regions, countries and notes. It filters type, country, in-stock status and by-the-glass availability.
