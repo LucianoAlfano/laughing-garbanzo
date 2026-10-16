@@ -4,12 +4,14 @@
    Very wide letterspacing, hairline rules, luxurious whitespace.
    =========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
 :root{
   --font-display:'Cinzel',Georgia,serif;
   --font-body:'Jost',system-ui,sans-serif;
   --font-ui:'Jost',sans-serif;
   --font-quote:'Cormorant Garamond',Georgia,serif;
   --font-soft:'Cormorant Garamond',Georgia,serif;
+
   --bg:#fcf8f6; --fg:#33242a; --muted:#7c6a70; --line:#ebdcd9;
   --surface:#fffdfc; --tint:#f5e9e5; --accent:#a9707f; --on-accent:#fffdfc;
   --ink-bg:#3a2730; --ink-fg:#fbf2f0; --ink-muted:#dcc3c7;
@@ -19,6 +21,7 @@
                linear-gradient(0deg,rgba(45,28,34,.6),transparent 52%);
   --hero-kicker:#f0cdd2;
   --shadow-sm:0 20px 50px rgba(74,48,56,.12);
+
   --h1:clamp(40px,5vw,76px); --h1-weight:400; --h1-lh:1.14; --h1-tracking:.03em;
   --hero-p:18px; --hero-max:720px; --hero-h:88vh;
   --logo-size:19px; --logo-weight:500; --logo-tracking:.26em;
@@ -61,12 +64,14 @@ h3{font-size:16px;text-transform:uppercase;letter-spacing:.17em}
 .ritual{border:1px solid var(--line);padding:42px 36px;text-align:center}
 .ritual .n{font-family:var(--font-soft);font-size:42px;font-style:italic;color:var(--accent);
   line-height:1;display:block;margin-bottom:16px}
+
+
 /* Distinctive salon direction: quiet luxury editorial */
 .concept-tabs--salon{background:var(--bg);border-bottom:1px solid var(--line)}
 .concept-tabs--salon .wrap{justify-content:center;gap:30px;padding-block:17px}
 .concept-tabs--salon a{padding:4px 0;min-height:0;background:transparent!important;color:var(--muted)!important;
   font-family:var(--font-display);font-size:10px;letter-spacing:.24em;text-transform:uppercase;border-bottom:1px solid transparent}
-.concept-tabs--salon a:first-child{color:var(--accent)!important;border-color:var(--accent)}
+.concept-tabs--salon a[aria-current="page"]{color:var(--accent)!important;border-color:var(--accent)}
 .concept-tabs--salon a:hover{color:var(--fg)!important;border-color:var(--fg)}
 .hero{align-items:center;--hero-pos:65% 50%}
 .hero-inner{text-align:center;margin-inline:auto;max-width:760px}

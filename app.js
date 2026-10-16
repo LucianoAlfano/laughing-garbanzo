@@ -17,6 +17,7 @@
   var KEY  = 'ndd-mode';
 
   function apply(mode) {
+    if (mode !== 'dark' && mode !== 'light') mode = html.getAttribute('data-default') === 'dark' ? 'dark' : 'light';
     html.setAttribute('data-theme', mode);
     try { localStorage.setItem(KEY, mode); } catch (e) {}
     $$('.dock-seg button').forEach(function (b) {
@@ -42,7 +43,7 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if (e.target.closest('input,textarea,select')) return;
+    if (e.target.isContentEditable || e.target.closest('input,textarea,select')) return;
     var k = e.key.toLowerCase();
     if (k === 'l') apply('light');
     if (k === 'd') apply('dark');
@@ -84,6 +85,7 @@
   frame();
 
   /* ---------- reveal on scroll ---------- */
+  document.documentElement.classList.add('js-reveal');
   var items = $$('.reveal');
   if (!reduce && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
@@ -111,7 +113,7 @@
       if (count) count.textContent = key === 'all'
         ? 'Showing all ' + n + ' themes'
         : 'Showing ' + n + ' of ' + cards.length + ' themes';
-      if (push) try { history.replaceState(null, '', key === 'all' ? location.pathname : '?c=' + key); } catch (e) {}
+      if (push) try { var u = new URL(location.href); if (key === 'all') u.searchParams.delete('c'); else u.searchParams.set('c', key); history.replaceState(null, '', u.pathname + u.search + u.hash); } catch (e) {}
     }
     chips.forEach(function (c) {
       c.addEventListener('click', function () { filter(c.dataset.filter, true); });
@@ -136,20 +138,64 @@
     });
 
     var DRAFT = 'ndd-draft';
-    var fields = $$('input[name],textarea[name]', form).filter(function (f) { return f.type !== 'hidden'; });
-    try {
-      var d = JSON.parse(localStorage.getItem(DRAFT) || '{}');
-      fields.forEach(function (f) { if (d[f.name]) f.value = d[f.name]; });
-    } catch (e) {}
-    fields.forEach(function (f) {
-      f.addEventListener('input', function () {
-        var o = {};
-        fields.forEach(function (g) { if (g.value) o[g.name] = g.value; });
-        try { localStorage.setItem(DRAFT, JSON.stringify(o)); } catch (e) {}
-        f.removeAttribute('aria-invalid');
-      });
+    var fields = $$('input[name],textarea[name]', form).filter(function (f) {
+      return f.type !== 'hidden' && f.name !== 'company_url';
     });
-
+    /* Drafts are session-scoped; the old persistent copy is cleared on load. */
+    try {
+      localStorage.removeItem(DRAFT);
+      var draft = JSON.parse(sessionStorage.getItem(DRAFT) || '{}');
+      fields.forEach(function (f) {
+        if (typeof draft[f.name] === 'string' && !(f.name === 'theme' && want)) f.value = draft[f.name];
+      });
+    } catch (e) {}
+    function saveDraft() {
+      var values = {};
+      fields.forEach(function (f) { if (f.value) values[f.name] = f.value; });
+      try { sessionStorage.setItem(DRAFT, JSON.stringify(values)); } catch (e) {}
+    }
+    fields.forEach(function (f) {
+      f.addEventListener('input', function () { saveDraft(); f.removeAttribute('aria-invalid'); });
+    });
+    function message() {
+      preview();
+      var fd = new FormData(form);
+      return [
+        'Name: '     + (fd.get('name')    || 'Not provided'),
+        'Business: ' + (fd.get('business') || ''),
+        'Website: '  + (fd.get('website') || 'None yet'),
+        'Phone: '    + (fd.get('phone')   || 'Not provided'),
+        'Theme: '    + (fd.get('theme')   || 'Help me choose'),
+        '', 'What I need:', fd.get('needs') || ''
+      ].join('\n');
+    }
+    function preview() {
+      var box = $('#email-preview'), label = $('#email-preview-label');
+      if (box) box.value = message();
+      if (label) label.hidden = false;
+    }
+    var copyBtn = $('#copy-inquiry'), clearBtn = $('#clear-inquiry');
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+      preview();
+      var box = $('#email-preview');
+      function fallback() {
+        if (box) { box.focus(); box.select(); }
+        if (status) status.textContent = 'Select and copy the message preview, then paste it into your email app.';
+      }
+      try {
+        if (!navigator.clipboard) { fallback(); return; }
+        navigator.clipboard.writeText(message()).then(function () {
+          if (status) status.textContent = 'Message copied. Paste it into an email to anthonyalfano157@gmail.com.';
+        })['catch'](fallback);
+      } catch (e) { fallback(); }
+    });
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      form.reset();
+      try { sessionStorage.removeItem(DRAFT); } catch (e) {}
+      var label = $('#email-preview-label');
+      if (label) label.hidden = true;
+      if (status) status.textContent = 'Draft cleared from this tab.';
+    });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (form.elements.company_url && form.elements.company_url.value) return; // honeypot
@@ -161,6 +207,7 @@
         if (status) status.textContent = 'Add your business name and a short note, then try again.';
         return;
       }
+      preview();
       var fd = new FormData(form);
       var body = [
         'Name: '      + (fd.get('name')    || 'Not provided'),
@@ -173,8 +220,8 @@
       location.href = 'mailto:anthonyalfano157@gmail.com'
         + '?subject=' + encodeURIComponent('Website inquiry — ' + fd.get('business'))
         + '&body='    + encodeURIComponent(body);
-      if (status) status.textContent = 'Your email draft is open — review it and hit send. Nothing was stored by this page.';
-      try { localStorage.removeItem(DRAFT); } catch (e) {}
+      if (status) status.textContent = 'Your email app may open a draft addressed to Anthony and Luciano. Review and send it there. If nothing opens, use Copy message. Your draft stays in this tab.';
+      saveDraft();
     });
   }
 
@@ -183,10 +230,12 @@
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       if (id.length < 2) return;
-      var t = document.querySelector(id);
+      var t = document.getElementById(decodeURIComponent(id.slice(1)));
       if (!t) return;
       e.preventDefault();
       scrollTo({ top: t.getBoundingClientRect().top + scrollY - 84, behavior: reduce ? 'auto' : 'smooth' });
+      if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+      t.focus({ preventScroll: true });
       try { history.replaceState(null, '', id); } catch (err) {}
     });
   });

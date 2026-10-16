@@ -3,6 +3,7 @@
    Structure only. Every theme-*.css file overrides the look:
    fonts, color, button shape, card shape, section rhythm.
    =========================================================== */
+
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:96px;overflow-x:clip}
 body{margin:0;overflow-x:clip;background:var(--bg);color:var(--fg);
@@ -18,6 +19,7 @@ p{color:var(--muted)}
 hr{border:0;border-top:1px solid var(--line);margin:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 ::selection{background:var(--accent);color:var(--on-accent)}
+
 .wrap{width:min(1200px,90%);margin-inline:auto}
 .wrap-narrow{width:min(880px,90%);margin-inline:auto}
 .skip{position:absolute;left:-9999px}
@@ -49,7 +51,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .burger[aria-expanded="true"] i:nth-child(2){opacity:0}
 .burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-5.7px) rotate(-45deg)}
 .drawer{display:none;overflow:hidden;max-height:0;transition:max-height .45s var(--ease);border-top:1px solid var(--line)}
-.drawer.open{max-height:460px}
+.drawer.open{max-height:min(75svh,640px);overflow-y:auto}
 .drawer a{display:block;padding:16px 0;border-bottom:1px solid var(--line);
   font-family:var(--font-display);font-size:18px}
 .drawer a:last-child{border-bottom:0}
@@ -123,6 +125,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap,26px)}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap,22px)}
 .split{display:grid;grid-template-columns:var(--split,1fr 1fr);gap:var(--split-gap,7%);align-items:center}
+
 .card{background:var(--surface);border:1px solid var(--line);
   border-radius:var(--card-radius,16px);padding:var(--card-pad,30px);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
@@ -175,11 +178,13 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
   letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
 .info-grid p{font-size:14px;margin:0;line-height:1.8}
 .info-grid strong{color:var(--fg);font-weight:600}
+
 .closer{padding:var(--closer-pad,72px);border-radius:var(--card-radius,16px);
   background:var(--ink-bg);color:var(--ink-fg);text-align:center;position:relative;overflow:hidden}
 .closer h2{color:var(--ink-fg);margin-bottom:16px}
 .closer p{color:var(--ink-muted);max-width:54ch;margin-inline:auto}
 .closer .hero-cta{justify-content:center}
+
 .site-foot{padding:38px 0;border-top:1px solid var(--line);
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;
   font-size:12.5px;color:var(--muted)}
@@ -206,11 +211,13 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .dock-exit:hover{transform:translateY(-2px)}
 
 /* ---------- motion ---------- */
-.reveal{opacity:0;transform:translateY(22px)}
-.reveal.in{opacity:1;transform:none;
+.reveal{opacity:1;transform:none}
+.js-reveal .reveal{opacity:0;transform:translateY(22px)}
+.js-reveal .reveal.in{opacity:1;transform:none;
   transition:opacity .85s var(--ease),transform .85s var(--ease);transition-delay:var(--d,0ms)}
 .bartop{position:fixed;inset:0 0 auto;height:3px;background:var(--accent);z-index:99;
   transform:scaleX(var(--p,0));transform-origin:0 50%;transition:transform .1s linear}
+
 :root{--ease:cubic-bezier(.22,1,.36,1)}
 
 /* ---------- responsive ---------- */
@@ -263,6 +270,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
   .hero>img{position:static;height:300px}
 }
 
+
 /* ===========================================================
    INDUSTRY CONCEPT TABS
    Shared accessibility and overflow behavior only. Each theme
@@ -273,7 +281,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .concept-tabs .wrap::-webkit-scrollbar{display:none}
 .concept-tabs a{flex:none;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 14px;
   font-family:var(--font-ui,var(--font-body));font-size:12px;font-weight:700;white-space:nowrap;transition:.25s ease}
-.concept-tabs a:first-child{color:var(--on-accent);background:var(--accent)}
+.concept-tabs a[aria-current]{color:var(--on-accent);background:var(--accent)}
 .concept-tabs a:hover{color:var(--fg);background:var(--tint)}
 
 /* Hero photographs are always cropped, never stretched. */
@@ -288,6 +296,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
   .hero h1{font-size:var(--h1-mobile,clamp(38px,12vw,56px));overflow-wrap:anywhere}
 }
 
+
 /* Multipage theme architecture */
 .subhero{padding:clamp(72px,10vw,132px) 0 clamp(54px,7vw,92px);position:relative;overflow:hidden}
 .subhero::after{content:"";position:absolute;inset:auto -8% -70% auto;width:420px;aspect-ratio:1;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:50%;opacity:.45}
@@ -296,6 +305,7 @@ hr{border:0;border-top:1px solid var(--line);margin:0}
 .menu a[aria-current="page"],.concept-tabs a[aria-current="page"]{color:var(--accent)}
 .concept-tabs a[aria-current="page"]::after{transform:scaleX(1)}
 @media(max-width:860px){.subhero{padding-top:72px}.subhero h1{font-size:clamp(38px,12vw,60px)}}
+
 
 /* Harbor & Vine deep multipage additions */
 .menu a[aria-current="page"],.concept-tabs a[aria-current="page"]{color:var(--accent);opacity:1}.concept-tabs a[aria-current="page"]{box-shadow:inset 0 -2px var(--accent)}

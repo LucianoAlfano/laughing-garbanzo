@@ -4,12 +4,14 @@
    Soft blob shapes, warm shadows, hand-lettered accent.
    =========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Karla:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap');
+
 :root{
   --font-display:'Fraunces',Georgia,serif;
   --font-body:'Karla',system-ui,sans-serif;
   --font-ui:'Karla',sans-serif;
   --font-quote:'Fraunces',Georgia,serif;
   --font-hand:'Caveat',cursive;
+
   --bg:#fbf1e3; --fg:#4a2b1c; --muted:#8a6650; --line:#e6d2bb;
   --surface:#fffaf2; --tint:#f5e4ce; --accent:#c2683a; --on-accent:#fffaf2;
   --ink-bg:#52301f; --ink-fg:#fdf3e6; --ink-muted:#e0c2a6;
@@ -19,6 +21,7 @@
                linear-gradient(0deg,rgba(60,32,18,.66),transparent 52%);
   --hero-kicker:#f3c98f;
   --shadow-sm:0 20px 46px rgba(102,60,34,.17);
+
   --h1:clamp(46px,6vw,88px); --h1-weight:500; --h1-lh:1.02; --h1-tracking:-.025em;
   --hero-p:18.5px; --hero-max:780px; --hero-h:84vh;
   --logo-size:24px; --logo-weight:600; --logo-tracking:-.02em;
@@ -55,11 +58,13 @@ h3{font-weight:600;letter-spacing:-.02em}
 .bakecard .shot{height:220px;border-radius:999px 999px 26px 26px;margin-bottom:20px}
 .bakecard h3{font-size:22px;margin-bottom:6px}
 .bakecard .price{font-family:var(--font-display);color:var(--accent);font-size:17px}
+
+
 /* Distinctive bakery direction: friendly counter labels */
 .concept-tabs--bakery{background:#fffaf2;border-bottom:2px dashed #e6d2bb}
 .concept-tabs--bakery .wrap{gap:10px}
 .concept-tabs--bakery a{border-radius:999px;background:#f5e4ce;color:#6f4934;font-size:13px}
-.concept-tabs--bakery a:first-child{transform:rotate(-2deg);box-shadow:0 6px 14px rgba(102,60,34,.15)}
+.concept-tabs--bakery a[aria-current="page"]{transform:rotate(-2deg);box-shadow:0 6px 14px rgba(102,60,34,.15)}
 .concept-tabs--bakery a:nth-child(2n){transform:rotate(1deg)}
 .hero{--hero-pos:58% 55%;border-radius:0 0 42% 0 / 0 0 10% 0}
 .hero-inner{margin-left:6%;max-width:760px}

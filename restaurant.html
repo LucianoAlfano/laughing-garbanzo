@@ -32,11 +32,11 @@
 <script>
 (function(){var h=document.documentElement,u=new URLSearchParams(location.search).get('mode'),s=null;
 try{s=localStorage.getItem('ndd-mode')}catch(e){}
-h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data-default')||'light'))})();
+h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(((s==='dark'||s==='light')?s:h.getAttribute('data-default'))||'light'))})();
 </script>
-</head>
+<link href="site-upgrades.css" id="ndd-upgrade-css" rel="stylesheet"/></head>
 <body>
-<a class="skip" href="restaurant-contact.html">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 <div aria-hidden="true" class="bartop" id="prog"></div>
 <header class="site-head" id="head">
 <div class="wrap">
@@ -48,8 +48,11 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <div class="drawer" id="drawer"><a href="restaurant.html">Home</a><a href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a><a href="restaurant-reservations.html">Reserve a table</a><a href="themes.html">← All website themes</a></div>
 </div>
 </header>
-<main id="main"><section class="hero hero-video" data-video-hero="">
-<video aria-hidden="true" autoplay="" class="hero-video-bg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture="" loop="" muted="" playsinline="" preload="auto" tabindex="-1" webkit-playsinline=""></video><div aria-hidden="true" class="hero-video-fallback"></div>
+<nav aria-label="Explore restaurant concept sections" class="concept-tabs concept-tabs--restaurant">
+<div class="wrap"><a aria-current="page" href="restaurant.html">Home</a><a href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a></div>
+</nav>
+<main id="main"><section class="hero hero-video" data-video-hero=""><button aria-label="Pause background video" aria-pressed="false" class="video-toggle" hidden="" type="button">Pause video</button>
+<video aria-hidden="true" autoplay="" class="hero-video-bg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture="" loop="" muted="" playsinline="" poster="restaurant.jpg" preload="auto" tabindex="-1" webkit-playsinline=""></video><div aria-hidden="true" class="hero-video-fallback"></div>
 <div class="hero-inner">
 <span class="kicker">Seasonal American · Est. 2014</span>
 <h1>A table worth<br/>staying at.</h1>
@@ -65,37 +68,8 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <div><span class="kicker">The menu</span><h2>This week at the pass</h2></div>
 <p class="lede">Written on Monday, printed on Tuesday, and changed again when the boats come in. Everything below is illustrative.</p>
 </div>
-<div class="g2" style="--gap:7%">
-<div class="menu-col reveal">
-<h3>To begin</h3>
-<div class="rows">
-<div class="row"><div><h4>Charred leeks</h4><p>Toasted hazelnut, brown butter, aged sherry.</p></div><span class="price">14</span></div>
-<div class="row"><div><h4>Oysters on ice</h4><p>Half dozen, mignonette, lemon. Daily selection.</p></div><span class="price">21</span></div>
-<div class="row"><div><h4>Chicory &amp; pear</h4><p>Blue cheese, candied walnut, cider vinaigrette.</p></div><span class="price">13</span></div>
-<div class="row"><div><h4>Warm bread service</h4><p>Cultured butter, flaked salt. Baked through service.</p></div><span class="price">7</span></div>
-</div>
-<h3 style="margin-top:46px">Desserts</h3>
-<div class="rows">
-<div class="row"><div><h4>Olive oil cake</h4><p>Stone fruit, crème fraîche.</p></div><span class="price">11</span></div>
-<div class="row"><div><h4>Dark chocolate pot</h4><p>Sea salt, shortbread.</p></div><span class="price">12</span></div>
-</div>
-</div>
-<div class="menu-col reveal" style="--d:110ms">
-<h3>Mains</h3>
-<div class="rows">
-<div class="row"><div><h4>Hand-cut pasta</h4><p>Late summer tomato, basil, cultured cream.</p></div><span class="price">22</span></div>
-<div class="row"><div><h4>Line-caught fish</h4><p>Changes daily. Fennel, citrus, new potato.</p></div><span class="price">34</span></div>
-<div class="row"><div><h4>Coal-roasted chicken</h4><p>For two. Bread salad, pan jus, bitter greens.</p></div><span class="price">46</span></div>
-<div class="row"><div><h4>Dry-aged sirloin</h4><p>Thirty-two days. Marrow butter, watercress.</p></div><span class="price">52</span></div>
-<div class="row"><div><h4>Autumn squash</h4><p>Brown butter, sage, pumpkin seed. Vegetarian.</p></div><span class="price">24</span></div>
-</div>
-<h3 style="margin-top:46px">Tasting</h3>
-<div class="rows">
-<div class="row"><div><h4>Chef’s four courses</h4><p>Whole table. Wine pairing available.</p></div><span class="price">78<span class="meta">pairing +45</span></span></div>
-</div>
-</div>
-</div>
-<p class="muted-sm rule-top reveal" style="margin-top:50px">In a real build this menu is edited by your kitchen from a phone — no developer, no PDF, no “please call for today’s specials.”</p>
+<p aria-live="polite" class="menu-live-status muted-sm" id="menu-status" role="status">Loading the current menu…</p><div aria-busy="true" class="live-menu-grid" id="menu-list"></div><noscript><p>Enable JavaScript to load the current menu.</p></noscript>
+<p class="muted-sm rule-top reveal" style="margin-top:50px">This menu loads from the same published spreadsheet as the full menu page, so the kitchen can update it without touching the website.</p>
 </div></section><section class="section"><div class="wrap">
 <div class="closer reveal">
 <span class="kicker nomark" style="color:inherit;opacity:.72">Like this one?</span>
@@ -124,82 +98,6 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <a class="dock-exit" href="themes.html">← Themes</a>
 </div>
 <script src="app.js?v=3"></script>
-
-<script id="restaurant-responsive-video">
-(function () {
-  "use strict";
-
-  var video = document.querySelector("video.hero-video-bg");
-  if (!video) return;
-
-  var mobileQuery = window.matchMedia("(max-width: 767px)");
-  var currentSource = "";
-
-  function silence() {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.volume = 0;
-    video.setAttribute("muted", "");
-  }
-
-  function wantedSource() {
-    return mobileQuery.matches
-      ? "Restaurant-Home-Video-Mobile.mp4"
-      : "Restaurant-Home-Video.mp4";
-  }
-
-  function startVideo(forceReload) {
-    var source = wantedSource();
-    silence();
-
-    if (forceReload || currentSource !== source) {
-      currentSource = source;
-      video.pause();
-      video.src = source;
-      video.load();
-    }
-
-    var playAttempt = video.play();
-    if (playAttempt && typeof playAttempt.catch === "function") {
-      playAttempt.catch(function () {
-        /* Safari may temporarily block autoplay during page restoration.
-           Retry on the first harmless page interaction. */
-      });
-    }
-  }
-
-  video.addEventListener("loadedmetadata", function () {
-    silence();
-    startVideo(false);
-  });
-  video.addEventListener("canplay", function () {
-    silence();
-    startVideo(false);
-  });
-  video.addEventListener("playing", silence);
-  video.addEventListener("volumechange", silence);
-  video.addEventListener("ended", function () {
-    video.currentTime = 0;
-    startVideo(false);
-  });
-
-  function retry() {
-    if (video.paused) startVideo(false);
-  }
-  document.addEventListener("touchstart", retry, { once: true, passive: true });
-  document.addEventListener("pointerdown", retry, { once: true, passive: true });
-  document.addEventListener("visibilitychange", function () {
-    if (!document.hidden) startVideo(false);
-  });
-
-  if (mobileQuery.addEventListener) {
-    mobileQuery.addEventListener("change", function () { startVideo(true); });
-  } else if (mobileQuery.addListener) {
-    mobileQuery.addListener(function () { startVideo(true); });
-  }
-
-  startVideo(true);
-})();
-</script><script src="theme-fx.js?v=10"></script>
-</body>
+<script src="restaurant-video.js"></script><script src="theme-fx.js"></script>
+<script src="menu-config.js"></script><script src="menu-list.js"></script><script src="site-upgrades.js"></script></body>
 </html>

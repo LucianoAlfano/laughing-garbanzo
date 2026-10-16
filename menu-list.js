@@ -20,12 +20,17 @@
         row = [];
       } else field += ch;
     }
+    if (quoted) throw new Error('Unclosed quoted CSV field');
     row.push(field);
     if (row.some(function (v) { return v.trim(); })) rows.push(row);
-    if (rows.length < 2) return [];
-    var headers = rows.shift().map(function (v) { return v.trim().toLowerCase(); });
+    if (!rows.length) throw new Error('Empty CSV');
+    var headers = rows.shift().map(function (v) {
+      return v.trim().toLowerCase().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ');
+    });
+    if (!headers.some(function (h) { return /^(item|name|dish)$/.test(h); }))
+      throw new Error('Expected an Item, Name or Dish column');
     return rows.map(function (values) {
-      var item = {};
+      var item = Object.create(null);
       headers.forEach(function (key, index) { item[key] = (values[index] || "").trim(); });
       return {
         category: item.category || "Menu",
@@ -39,7 +44,7 @@
         order: Number(item["sort order"] || item.order || 9999)
       };
     }).filter(function (item) {
-      return item.name && !/^(no|false|0|out|sold out)$/i.test(item.available);
+      return item.name && !/^(no|false|0|out|sold out|out of stock|unavailable)$/i.test(item.available);
     });
   }
 
@@ -50,7 +55,7 @@
   }
 
   function render(items) {
-    var groups = {};
+    var groups = Object.create(null);
     items.sort(function (a, b) { return a.order - b.order; }).forEach(function (item) {
       (groups[item.category] = groups[item.category] || []).push(item);
     });
@@ -63,7 +68,10 @@
             '<span class="price">' + esc(item.price) + (item.priceNote ? '<span class="meta">' + esc(item.priceNote) + '</span>' : '') + '</span></div>';
         }).join('') + '</div></section>';
     }).join('');
-    status.textContent = items.length + ' current menu items';
+    status.textContent = items.length
+      ? items.length + ' current menu items · checked ' +
+        new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+      : 'No menu items are currently available.';
     root.setAttribute('aria-busy', 'false');
   }
 
@@ -72,13 +80,34 @@
     root.setAttribute('aria-busy', 'false');
     return;
   }
-  var separator = config.csvUrl.indexOf('?') === -1 ? '?' : '&';
-  fetch(config.csvUrl + separator + 'cache=' + Date.now(), { cache: 'no-store' })
-    .then(function (response) { if (!response.ok) throw new Error('CSV request failed: ' + response.status); return response.text(); })
-    .then(function (text) { var items = parseCSV(text); if (!items.length) throw new Error('No available menu rows found.'); render(items); })
-    .catch(function (error) {
-      console.error('Menu inventory error:', error);
-      status.textContent = 'The live menu could not be loaded. Check the published Menu tab and refresh.';
+  var loading = false, loaded = false;
+
+  async function load() {
+    if (loading || document.hidden) return;
+    loading = true;
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, 15000);
+    try {
+      var response = await fetch(config.csvUrl, { cache: 'no-store', signal: controller.signal });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      var text = await response.text();
+      if (/^\s*</.test(text)) throw new Error('Expected CSV, received HTML');
+      render(parseCSV(text));
+      loaded = true;
+    } catch (error) {
+      console.warn('Menu inventory:', error.message);
+      status.textContent = loaded
+        ? 'Refresh unavailable. Showing the last loaded menu; prices and availability may have changed.'
+        : 'The current menu is temporarily unavailable. Please refresh, or contact the restaurant.';
       root.setAttribute('aria-busy', 'false');
-    });
+    } finally {
+      clearTimeout(timer);
+      loading = false;
+    }
+  }
+
+  var minutes = Number(config.refreshMinutes) || 10;
+  setInterval(load, Math.max(1, minutes) * 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+  load();
 })();

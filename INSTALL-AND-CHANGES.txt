@@ -1,0 +1,136 @@
+NEXTDAY DIGITAL — COMPLETE EDITED FILE SET
+Anthony & Luciano Alfano
+
+
+WHAT THIS IS
+Every file edited or created across this conversation, in one package:
+the site-wide upgrade, the theme finder, and the new background animations.
+41 files, all flat, no subfolders.
+
+
+IMPORTANT: THIS IS AN OVERLAY, NOT A WHOLE WEBSITE
+Copy these files into your existing website root and replace matching
+filenames. Do NOT delete the repository first.
+
+Files you must keep (they are not in this ZIP and are still required):
+  restaurant.jpg, restaurant-pasta.jpg, restaurant-scallops.jpg,
+  restaurant-steak.jpg, bakery.jpg, landscape.jpg, auto.jpg, fitness.jpg,
+  salon.jpg, contractor.jpg, professional.jpg
+  Restaurant-Home-Video.mp4, Restaurant-Home-Video-Mobile.mp4
+  sitemap.xml, README.md and anything else already deployed.
+
+After uploading, hard-refresh once (Ctrl/Cmd + Shift + R) so the browser
+drops the cached copies of app.js and theme-fx.js.
+
+
+NEW FILES (7)
+  find-your-theme.html   Guided theme finder page
+  theme-finder.css       Finder styling
+  theme-finder.js        Finder logic
+  site-upgrades.css      Shared polish layered over base.css
+  site-upgrades.js       Shared behaviour (nav state, focus, drawer)
+  restaurant-video.js    Background video controller, extracted from the page
+  theme-fx.css           Companion stylesheet for the effects script
+
+
+REPLACED FILES (34)
+  18 HTML pages, app.js, base.css, theme-fx.js, 8 theme-*.css files,
+  menu-list.js, menu-config.js, wine-list.js, wine-config.js,
+  restaurant-forms.js, robots.txt
+
+
+WHAT CHANGED
+
+1. Both of you, everywhere
+   Visible copy, button labels and the homepage structured data now name
+   Anthony and Luciano. "1 — Person, from first message to launch" became
+   "2 — Brothers". A founders panel was added to the homepage and gallery.
+   Your existing anthonyalfano157@gmail.com address is unchanged; no new
+   mailbox was invented.
+
+2. Background animations rebuilt
+   Each theme now has its own scene instead of generic drifting particles:
+   candlelight and embers, a wind field with fluttering leaves, carbon weave
+   and specular sweeps, oven glow with steam ribbons, speed streaks with a
+   heartbeat shockwave, silk ribbons and petals, a self-drawing blueprint, a
+   growing ledger chart, and an aurora constellation that leans toward the
+   cursor. Depth parallax responds to pointer and scroll. Glows are
+   pre-rendered sprites rather than a new gradient per particle, and frame
+   times are sampled so density drops on slower devices and recovers when
+   there is headroom. Your fork cursor and its dark shadow are untouched.
+
+3. Navigation repaired
+   Restaurant subpages pointed every footer and "Themes" link back to
+   restaurant.html. They now reach professional.html, landscape.html,
+   themes.html and index.html correctly. Skip links target #main. The active
+   page is marked in the tabs; single-page demos highlight the section in
+   view.
+
+4. Live menu and wine
+   Both loaders now validate headers, handle quoted and multi-line CSV
+   fields, time out after 15 seconds, refresh every 10 minutes while the tab
+   is visible, and re-check on return. A first-load failure says so plainly
+   instead of showing invented bottles; a failed refresh keeps the last good
+   data with a warning. The restaurant homepage now reads the same published
+   sheet as the menu page rather than a separate hard-coded list.
+
+5. Honest forms
+   The reservation form previously tried to email a fictional
+   .example address. It now validates required fields, rejects past dates and
+   previews the request, clearly labelled as a demonstration. The agency
+   inquiry form gained a message preview, a copy fallback and a clear-draft
+   button; drafts are session-scoped and the status no longer implies an
+   email was sent.
+
+6. Guided theme finder
+   find-your-theme.html asks for business type, priority and visual style,
+   reorders all eight demos with the reasons shown, and supports search,
+   shortlist-only view, quick-view dialogs, up to three shortlisted
+   directions, a preferred pick, undo, shareable links, and a project brief
+   you can copy, download, print or open as an email draft. Notes are never
+   put into a share link. The gallery links to it in three places.
+
+7. Smaller fixes
+   Stored colour modes are validated before use. Gallery filters preserve
+   other URL parameters. Anchor jumps move keyboard focus. The mobile drawer
+   is inert while closed and scrolls when long. Reveal animations no longer
+   hide content when JavaScript is unavailable. The header collapses at
+   1100px instead of overlapping. robots.txt no longer blocks crawlers from
+   reading the demos' own noindex tags.
+
+
+TESTING DONE HERE
+  - Node syntax check on every JavaScript file and inline script
+  - 18 HTML pages: duplicate IDs, every local link and anchor target,
+    JSON-LD parsing, branding scan for solo or one-person wording
+  - CSS parsed including nested media queries
+  - Animations: 9 themes x light and dark, 16,218 frames, ~1.77M draw calls,
+    asserting no exceptions and no non-finite coordinates, alphas or colours;
+    plus 2,400-frame particle-recycling bounds, slow-device, touch,
+    Save-Data, resize to 390px, scroll, colour switch, hidden tab and
+    reduced motion
+  - Finder: 240 ranking and share-URL round-trip cases, malformed-state
+    sanitisation, immutability, shortlist cap, six search cases
+  - ZIP integrity
+
+NOT TESTED HERE
+No browser engine exists in this environment. Visual appearance, real frame
+rates, iPhone video playback, clipboard and print behaviour, live Google
+Sheet requests and email delivery were not exercised. Check those on the
+deployed site.
+
+
+STILL WORTH DOING
+  - Connect a real form or booking provider if you want submissions to
+    arrive without the visitor pressing send in their email app.
+  - Replace repeated placeholder photography. Interior shots previously
+    captioned as staff portraits were removed from the salon, professional
+    and fitness demos.
+  - Confirm the production domain before changing canonical URLs and
+    sitemap.xml.
+  - 404.html uses relative paths; a deeply nested missing URL needs a
+    deployment-aware base path, which depends on your hosting root.
+  - Only the restaurant is a multi-page demo. The other seven remain
+    single-page by design.
+  - If any background scene feels too strong or too subtle, the per-theme
+    opacity values near the top of theme-fx.css are the one place to adjust.

@@ -4,11 +4,13 @@
    Conservative grid, rules, small caps labels, restrained motion.
    =========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
 :root{
   --font-display:'Merriweather',Georgia,serif;
   --font-body:'Source Sans 3',system-ui,sans-serif;
   --font-ui:'Source Sans 3',sans-serif;
   --font-quote:'Merriweather',Georgia,serif;
+
   --bg:#f6f7f9; --fg:#101a2c; --muted:#545f73; --line:#d8dde5;
   --surface:#fff; --tint:#e9edf3; --accent:#1e3a63; --on-accent:#fff;
   --brass:#b08d44;
@@ -19,6 +21,7 @@
                linear-gradient(0deg,rgba(9,17,30,.76),transparent 52%);
   --hero-kicker:#c9a24a;
   --shadow-sm:0 14px 38px rgba(16,26,44,.13);
+
   --h1:clamp(40px,5vw,74px); --h1-weight:300; --h1-lh:1.1; --h1-tracking:-.02em;
   --hero-p:18px; --hero-max:760px; --hero-h:82vh;
   --logo-size:20px; --logo-weight:700; --logo-tracking:-.01em;
@@ -69,11 +72,13 @@ h4{font-family:var(--font-ui);font-weight:700}
   color:var(--accent);letter-spacing:-.03em;line-height:1;margin-bottom:10px}
 .casestudy h3{font-size:17px;margin-bottom:8px}
 .casestudy p{font-size:14px;margin:0}
+
+
 /* Distinctive professional direction: boardroom report */
 .concept-tabs--professional{background:#fff;border-block:1px solid #d8dde5;box-shadow:0 8px 22px rgba(16,26,44,.06)}
 .concept-tabs--professional .wrap{gap:0;padding-block:0}
 .concept-tabs--professional a{min-height:50px;border-right:1px solid #d8dde5;border-radius:0;color:#545f73;font-size:12px;padding-inline:22px}
-.concept-tabs--professional a:first-child{background:#1e3a63;color:#fff;border-top:3px solid #b08d44}
+.concept-tabs--professional a[aria-current="page"]{background:#1e3a63;color:#fff;border-top:3px solid #b08d44}
 .concept-tabs--professional a:hover{background:#e9edf3;color:#101a2c}
 .hero{align-items:center;--hero-pos:67% 50%}
 .hero-inner{margin-left:5%;max-width:760px;background:rgba(9,17,30,.78);padding:58px;border-top:4px solid #b08d44}

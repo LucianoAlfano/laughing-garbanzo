@@ -4,11 +4,13 @@
    Oversized compressed type, slashed dividers, zero softness.
    =========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap');
+
 :root{
   --font-display:'Bebas Neue',Impact,sans-serif;
   --font-body:'Barlow',system-ui,sans-serif;
   --font-ui:'Barlow Condensed',sans-serif;
   --font-quote:'Barlow Condensed',sans-serif;
+
   --bg:#0a0b0d; --fg:#f4f5f6; --muted:#949aa3; --line:#1f2328;
   --surface:#111317; --tint:#111317; --accent:#e23a2e; --on-accent:#fff;
   --ink-bg:#060708; --ink-fg:#f4f5f6; --ink-muted:#a2a8b1;
@@ -19,6 +21,7 @@
   --hero-kicker:#ff6a5e;
   --shadow-sm:0 18px 42px rgba(0,0,0,.62);
   color-scheme:dark;
+
   --h1:clamp(62px,9.6vw,154px); --h1-weight:400; --h1-lh:.84; --h1-tracking:0; --h1-case:uppercase;
   --hero-p:17px; --hero-max:900px; --hero-h:94vh;
   --logo-size:26px; --logo-weight:400; --logo-tracking:.05em;
@@ -74,12 +77,14 @@ h4{font-family:var(--font-ui);text-transform:uppercase;letter-spacing:.07em;font
 .coach h3{font-size:27px;margin:18px 0 2px}
 .coach span{font-family:var(--font-ui);font-size:12.5px;letter-spacing:.17em;
   text-transform:uppercase;color:var(--accent)}
+
+
 /* Distinctive gym direction: training board / scoreboard */
 .concept-tabs--fitness{background:var(--accent);border:0}
 .concept-tabs--fitness .wrap{padding-block:0;gap:0}
 .concept-tabs--fitness a{min-height:54px;flex:1;border-left:1px solid rgba(255,255,255,.25);color:#fff;
   font-family:var(--font-ui);font-size:14px;letter-spacing:.12em;text-transform:uppercase}
-.concept-tabs--fitness a:first-child{background:#070809;color:#fff}
+.concept-tabs--fitness a[aria-current="page"]{background:#070809;color:#fff}
 .concept-tabs--fitness a:hover{background:#fff;color:#111}
 .hero{align-items:center;--hero-pos:64% 50%}
 .hero-inner{margin-left:5%;max-width:940px}

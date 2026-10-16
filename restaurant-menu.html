@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html data-default="light" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -18,15 +19,15 @@
 <link as="image" fetchpriority="high" href="restaurant.jpg" rel="preload"/>
 <link href="base.css" rel="stylesheet"/>
 <link href="theme-restaurant.css" rel="stylesheet"/>
-<link rel="stylesheet" href="theme-fx.css">
+<link href="theme-fx.css" rel="stylesheet"/>
 <script>
 (function(){var h=document.documentElement,u=new URLSearchParams(location.search).get('mode'),s=null;
 try{s=localStorage.getItem('ndd-mode')}catch(e){}
-h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data-default')||'light'))})();
+h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(((s==='dark'||s==='light')?s:h.getAttribute('data-default'))||'light'))})();
 </script>
-</head>
+<link href="site-upgrades.css" id="ndd-upgrade-css" rel="stylesheet"/></head>
 <body>
-<a class="skip" href="restaurant-contact.html">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 <div aria-hidden="true" class="bartop" id="prog"></div>
 <header class="site-head" id="head">
 <div class="wrap">
@@ -38,14 +39,17 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <div class="drawer" id="drawer"><a href="restaurant.html">Home</a><a href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a><a href="restaurant-reservations.html">Reserve a table</a><a href="themes.html">← All website themes</a></div>
 </div>
 </header>
-<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Home</span><h1>Menu</h1><p class="lede">Explore menu for this restaurant website concept.</p><a class="sheet-admin-link" href="https://docs.google.com/spreadsheets/d/1h3gh3p0kFrthk3AVDAoipkDWxo5NKiRSlvmOiKSaRGI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Open menu &amp; wine workbook <span aria-hidden="true">↗</span></a></div></section><section class="section" id="menu"><div class="wrap">
+<nav aria-label="Explore restaurant concept sections" class="concept-tabs concept-tabs--restaurant">
+<div class="wrap"><a href="restaurant.html">Home</a><a aria-current="page" href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a></div>
+</nav>
+<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Seasonal dining</span><h1>Menu</h1><p class="lede">Explore menu for this restaurant website concept.</p><a class="sheet-admin-link" data-staff-link="" hidden="" href="https://docs.google.com/spreadsheets/d/1h3gh3p0kFrthk3AVDAoipkDWxo5NKiRSlvmOiKSaRGI/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Open menu &amp; wine workbook <span aria-hidden="true">↗</span></a></div></section><section class="section" id="menu"><div class="wrap">
 <div class="sec-head reveal">
 <div><span class="kicker">The menu</span><h2>This week at the pass</h2></div>
 <p class="lede">Written on Monday, printed on Tuesday, and changed again when the boats come in. Everything below is illustrative.</p>
 </div>
-<p class="menu-live-status muted-sm" id="menu-status" role="status" aria-live="polite">Loading the current menu…</p>
-<div class="live-menu-grid" id="menu-list" aria-busy="true"></div>
-<p class="muted-sm rule-top reveal" style="margin-top:50px">In a real build this menu is edited by your kitchen from a phone — no developer, no PDF, no “please call for today’s specials.”</p>
+<p aria-live="polite" class="menu-live-status muted-sm" id="menu-status" role="status">Loading the current menu…</p>
+<div aria-busy="true" class="live-menu-grid" id="menu-list"></div>
+<p class="muted-sm rule-top reveal" style="margin-top:50px">This menu is connected to a published spreadsheet. Update the sheet to change the dishes, descriptions, prices and availability shown here.</p>
 </div></section><section class="section"><div class="wrap">
 <div class="closer reveal">
 <span class="kicker nomark" style="color:inherit;opacity:.72">Like this one?</span>
@@ -60,7 +64,7 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <div class="wrap">
 <footer class="site-foot">
 <span>Harbor &amp; Vine · fictional design concept</span>
-<span><a href="professional.html">← Calloway &amp; Reed</a>  ·  <a href="themes.html">All 8 themes</a>  ·  <a href="landscape.html">Field &amp; Form →</a></span>
+<span><a href="professional.html">← Calloway &amp; Reed</a>  ·  <a href="themes.html">All 8 themes</a>  ·  <a href="landscape.html">Field &amp; Form →</a></span>
 <span>Built by <a href="index.html"><u>NextDay Digital</u></a></span>
 </footer>
 <p class="disclosure">Harbor &amp; Vine is an original website concept created by NextDay Digital to demonstrate layout, typography and conversion flow for this industry. The business, staff, hours, address, telephone number, prices and reviews shown are invented placeholders. Not a real business, client project or endorsement. Your site would use your own branding, photography and approved content.</p>
@@ -76,6 +80,6 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <script src="app.js"></script>
 <script src="menu-config.js"></script>
 <script src="menu-list.js"></script>
-<script src="theme-fx.js?v=10"></script>
-</body>
+<script src="theme-fx.js"></script>
+<script src="site-upgrades.js"></script></body>
 </html>

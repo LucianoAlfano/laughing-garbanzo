@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html data-default="light" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -18,15 +19,15 @@
 <link as="image" fetchpriority="high" href="restaurant.jpg" rel="preload"/>
 <link href="base.css" rel="stylesheet"/>
 <link href="theme-restaurant.css" rel="stylesheet"/>
-<link rel="stylesheet" href="theme-fx.css">
+<link href="theme-fx.css" rel="stylesheet"/>
 <script>
 (function(){var h=document.documentElement,u=new URLSearchParams(location.search).get('mode'),s=null;
 try{s=localStorage.getItem('ndd-mode')}catch(e){}
-h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data-default')||'light'))})();
+h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(((s==='dark'||s==='light')?s:h.getAttribute('data-default'))||'light'))})();
 </script>
-</head>
+<link href="site-upgrades.css" id="ndd-upgrade-css" rel="stylesheet"/></head>
 <body>
-<a class="skip" href="restaurant-contact.html">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 <div aria-hidden="true" class="bartop" id="prog"></div>
 <header class="site-head" id="head">
 <div class="wrap">
@@ -38,11 +39,14 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <div class="drawer" id="drawer"><a href="restaurant.html">Home</a><a href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a><a aria-current="page" href="restaurant-reservations.html">Reserve a table</a><a href="themes.html">← All website themes</a></div>
 </div>
 </header>
-<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Reservations</span><h1>Your table</h1><p class="lede">Choose a preferred date, time and experience. This concept prepares a request; a production build can connect the restaurant’s live booking provider.</p></div></section><section class="section"><div class="wrap-narrow"><form class="restaurant-form reveal" id="restaurant-reservation"><div class="g2"><label>Date<input name="date" required="" type="date"/></label><label>Party size<select name="party" required=""><option value="">Choose…</option><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7–8 guests</option></select></label><label>Preferred time<select name="time" required=""><option value="">Choose…</option><option>5:00pm</option><option>5:30pm</option><option>6:00pm</option><option>6:30pm</option><option>7:00pm</option><option>7:30pm</option><option>8:00pm</option><option>8:30pm</option></select></label><label>Experience<select name="experience"><option>Dining room</option><option>Bar seating</option><option>Four-course tasting</option></select></label><label>Name<input autocomplete="name" name="name" required=""/></label><label>Email<input autocomplete="email" name="email" required="" type="email"/></label></div><label>Dietary needs or occasion<textarea name="notes" placeholder="Allergies, accessibility needs, birthday, anniversary…"></textarea></label><button class="btn" type="submit">Prepare reservation request</button><p class="muted-sm" id="reservation-status" role="status">No table is held until the restaurant confirms.</p></form></div></section><section class="section tint"><div class="wrap-narrow"><details class="faq-item"><summary>How far ahead do reservations open?</summary><p>Thirty days at 9am. Private dining can be requested earlier.</p></details><details class="faq-item"><summary>Do you take walk-ins?</summary><p>Sixteen bar seats are held for walk-ins each evening.</p></details><details class="faq-item"><summary>Can you accommodate allergies?</summary><p>Usually, with advance notice. Contact the restaurant directly for severe allergies.</p></details></div></section></main>
+<nav aria-label="Explore restaurant concept sections" class="concept-tabs concept-tabs--restaurant">
+<div class="wrap"><a href="restaurant.html">Home</a><a href="restaurant-menu.html">Menu</a><a href="restaurant-wine.html">Wine List</a><a href="restaurant-private-dining.html">Private Dining</a><a href="restaurant-about.html">Our Story</a><a href="restaurant-contact.html">Contact</a></div>
+</nav>
+<main id="main"><section class="subhero section ink"><div class="wrap"><span class="kicker">Reservations</span><h1>Your table</h1><p class="lede">Choose a preferred date, time and experience. This interactive concept previews your request only — it does not contact a restaurant or hold a table.</p></div></section><section class="section"><div class="wrap-narrow"><form class="restaurant-form reveal" data-demo="true" id="restaurant-reservation"><div class="g2"><label>Date<input name="date" required="" type="date"/></label><label>Party size<select name="party" required=""><option value="">Choose…</option><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7–8 guests</option></select></label><label>Preferred time<select name="time" required=""><option value="">Choose…</option><option>5:00pm</option><option>5:30pm</option><option>6:00pm</option><option>6:30pm</option><option>7:00pm</option><option>7:30pm</option><option>8:00pm</option><option>8:30pm</option></select></label><label>Experience<select name="experience"><option>Dining room</option><option>Bar seating</option><option>Four-course tasting</option></select></label><label>Name<input autocomplete="name" name="name" required=""/></label><label>Email<input autocomplete="email" name="email" required="" type="email"/></label></div><label>Dietary needs or occasion<textarea name="notes" placeholder="Allergies, accessibility needs, birthday, anniversary…"></textarea></label><button class="btn" type="submit">Preview reservation request</button><p class="muted-sm" id="reservation-status" role="status">Interactive demo only. No request is sent and no table is held.</p><pre class="request-preview" hidden="" id="reservation-preview"></pre></form></div></section><section class="section tint"><div class="wrap-narrow"><details class="faq-item"><summary>How far ahead do reservations open?</summary><p>Thirty days at 9am. Private dining can be requested earlier.</p></details><details class="faq-item"><summary>Do you take walk-ins?</summary><p>Sixteen bar seats are held for walk-ins each evening.</p></details><details class="faq-item"><summary>Can you accommodate allergies?</summary><p>Usually, with advance notice. Contact the restaurant directly for severe allergies.</p></details></div></section></main>
 <div class="wrap">
 <footer class="site-foot">
 <span>Harbor &amp; Vine · fictional design concept</span>
-<span><a href="professional.html">← Calloway &amp; Reed</a>  ·  <a href="themes.html">All 8 themes</a>  ·  <a href="landscape.html">Field &amp; Form →</a></span>
+<span><a href="professional.html">← Calloway &amp; Reed</a>  ·  <a href="themes.html">All 8 themes</a>  ·  <a href="landscape.html">Field &amp; Form →</a></span>
 <span>Built by <a href="index.html"><u>NextDay Digital</u></a></span>
 </footer>
 <p class="disclosure">Harbor &amp; Vine is an original website concept created by NextDay Digital to demonstrate layout, typography and conversion flow for this industry. The business, staff, hours, address, telephone number, prices and reviews shown are invented placeholders. Not a real business, client project or endorsement. Your site would use your own branding, photography and approved content.</p>
@@ -56,6 +60,6 @@ h.setAttribute('data-theme',(u==='dark'||u==='light')?u:(s||h.getAttribute('data
 <a class="dock-exit" href="themes.html">← Themes</a>
 </div>
 <script src="app.js"></script>
-<script src="restaurant-forms.js"></script><script src="theme-fx.js?v=10"></script>
-</body>
+<script src="restaurant-forms.js"></script><script src="theme-fx.js"></script>
+<script src="site-upgrades.js"></script></body>
 </html>
