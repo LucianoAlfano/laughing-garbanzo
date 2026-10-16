@@ -1,0 +1,10 @@
+/* No pasta poster, no negative stacking, no hidden-video autoplay deadlock. */
+html .hero.hero-video{position:relative;isolation:isolate;overflow:hidden;background:#17130f!important;background-image:none!important}
+html .hero.hero-video video.hero-video-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover;object-position:center;z-index:0!important;display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;background:#17130f;pointer-events:none}
+html .hero.hero-video::before{content:none!important}
+html .hero.hero-video::after{content:"";position:absolute;inset:0;z-index:1!important;background:var(--hero-scrim);pointer-events:none}
+html .hero.hero-video .hero-inner{position:relative;z-index:2!important}
+html .hero.hero-video .hero-video-fallback{display:none!important;background:none!important}
+.hero-video-bg::-webkit-media-controls,.hero-video-bg::-webkit-media-controls-start-playback-button,.hero-video-bg::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none}
+#hero-playback-status{position:absolute;bottom:18px;left:5%;right:5%;z-index:3;color:#fff;font-size:13px;cursor:pointer}
+#hero-playback-status[hidden]{display:none!important}
