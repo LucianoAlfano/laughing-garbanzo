@@ -1,0 +1,60 @@
+/* ===========================================================
+   NextDay Digital — companion stylesheet for theme-fx.js
+   Cursor artwork rules are unchanged (dark drop shadow only).
+   Background layer tuning is per theme via html[data-fx].
+   =========================================================== */
+
+/* ---------- canvas layers ---------- */
+.fx-bg,
+.fx-burst{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;user-select:none;-webkit-user-select:none}
+.fx-bg{z-index:-1;opacity:.85;transition:opacity .6s ease}
+.fx-burst{z-index:110}
+
+/* Scene-by-scene weighting so no theme feels washed out or noisy. */
+html[data-fx="restaurant"] .fx-bg{opacity:.95}
+html[data-fx="landscape"]  .fx-bg{opacity:.8}
+html[data-fx="auto"]       .fx-bg{opacity:1}
+html[data-fx="bakery"]     .fx-bg{opacity:.85}
+html[data-fx="fitness"]    .fx-bg{opacity:1}
+html[data-fx="salon"]      .fx-bg{opacity:.78}
+html[data-fx="contractor"] .fx-bg{opacity:.72}
+html[data-fx="professional"] .fx-bg{opacity:.7}
+html[data-fx="nextday"]    .fx-bg{opacity:.9}
+
+/* Dark palettes carry light-emitting scenes better. */
+html[data-theme="dark"] .fx-bg{opacity:1}
+
+/* ---------- themed cursor ---------- */
+.fx-cursor{position:fixed;left:0;top:0;width:40px;height:40px;pointer-events:none;z-index:10000;opacity:0;will-change:transform}
+.fx-cursor.is-visible{opacity:1}
+.fx-cursor.is-native{opacity:0}
+.fx-cursor svg{display:block;width:40px;height:40px;overflow:visible;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.65))}
+.fx-a{fill:var(--accent)}
+.fx-b{fill:var(--fg)}
+.fx-sa{fill:none;stroke:var(--accent)}
+.fx-sb{fill:none;stroke:var(--fg)}
+.fx-cursor-hover{transition:transform .2s}
+.fx-cursor.is-hover .fx-cursor-hover{transform:scale(1.15)}
+.fx-cursor.is-click .fx-cursor-inner{animation:fx-tool-tap .3s ease}
+@keyframes fx-tool-tap{50%{transform:rotate(-10deg) scale(.88)}}
+
+@media(hover:hover) and (pointer:fine){
+  html.fx-has-cursor,
+  html.fx-has-cursor a,
+  html.fx-has-cursor button,
+  html.fx-has-cursor summary{cursor:none}
+  html.fx-has-cursor input,
+  html.fx-has-cursor textarea{cursor:text}
+  html.fx-has-cursor select{cursor:auto}
+}
+
+/* ---------- accessibility and print ---------- */
+@media(prefers-reduced-motion:reduce){
+  .fx-bg{transition:none}
+  .fx-burst{display:none}
+  .fx-cursor-hover,
+  .fx-cursor-inner{animation:none!important;transition:none!important}
+}
+@media print{
+  .fx-bg,.fx-burst,.fx-cursor{display:none!important}
+}
